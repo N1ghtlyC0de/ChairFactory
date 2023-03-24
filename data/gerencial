@@ -1,0 +1,14 @@
+from userInterface.colors import Colors as col
+from data.silla import Silla
+
+class Gerencial(Silla):
+  def __init__(self, referencia, precio, nota):
+    super().__init__(referencia, precio, nota)
+
+  def removerDelCatalogo(self):
+    if self._nota < 4 or self._precio > 300000:
+      return col.rojo + "Remover" + col.default
+    return col.verde + "Mantener" + col.default
+
+  def __str__(self):
+    return 'Gerencial' + '\t' + super().__str__()
