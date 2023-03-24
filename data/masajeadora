@@ -1,0 +1,14 @@
+from userInterface.colors import Colors as col
+from data.silla import Silla
+
+class Masajeadora(Silla):
+  def __init__(self, referencia, precio, calificacion, usos , calefacción):
+    super().__init__(referencia, precio, calificacion)
+    self._usos = usos
+    self._calefacción = calefacción
+
+  def removerDelCatalogo(self):
+    return col.verde + "Mantener" + col.default 
+  
+  def __str__(self):
+    return 'Masajeadora' + '\t' + super().__str__() + '\t' + 'Modos de Uso: ' + self._usos + '\t' + 'Calefacción: ' + self._calefacción
