@@ -1,0 +1,50 @@
+from userInterface.colors import Colors as col 
+
+class Controller():
+  def __init__(self, ui, catalogo):
+    self._ui = ui
+    self._catalogo = catalogo
+
+  def loop(self):      
+    while True:        
+      self._ui.bienvenida()
+      self._ui.mostrarMenu()
+      try:
+        opc = self._ui.pedirOpcion()
+        
+        if opc[0] == 'c': # Show chairs by category
+          self._ui.clearConsole()
+          while True:
+            self._ui.mostrarMensaje(col.amarillo + str('***** CATEGORÍA DE LAS SILLAS *****') + col.default)
+            self._ui.mostrarMenuSillas()
+            try:
+              cat = self._ui.pedirOpcion()
+              if cat[0] == 't':
+                break
+              lst = self._catalogo.mostrarCategoria(cat)
+              for s in lst:
+                self._ui.mostrarMensaje(s)
+            except TypeError:
+              self._ui.mostrarMensaje('Comando Inválido, por favor reintentar')
+              continue
+            except IndexError:
+              self._ui.mostrarMensaje('Comando Inválido, por favor reintentar')
+              continue
+            break
+              
+        if opc[0] == 's': # Show the status of each chair
+          self._ui.clearConsole()
+          self._ui.mostrarMensaje(col.amarillo + str('***** STATUS DE LAS SILLAS *****') + col.default)
+          self._catalogo.status()
+          continue
+          
+        if opc[0] == 't': # End the program
+          self._ui.clearConsole()
+          self._ui.mostrarMensaje('Sesión finalizada.')
+          break
+
+        if opc[0] != 'c' and opc[0] != 's' and opc[0] != 't':
+          self._ui.mostrarMensaje('Comando Inválido, por favor reintentar')
+        
+      except IndexError:
+        self._ui.mostrarMensaje('Comando Inválido, por favor reintentar')
